@@ -30,6 +30,7 @@ if len1 + 4 == len(d):
 else:
     print('Length error')
     exit(1)
+xor1 = (len(d) & 0xff) ^ 0xd6
 realcrc = crc32mpeg2(d[8:])
 readcrc = int.from_bytes(d[4:8], 'big')
 if realcrc == readcrc:
@@ -45,7 +46,6 @@ if tmp == 19:
 else:
     print('Warning: bigint[0008:000C]=' + hex(tmp) + ', not 0x13, maybe something wrong')
 d = bytearray(d[0xc:])
-xor1 = d[0]
 for i in range(len(d)):
     d[i] ^= xor1
 tmp = int.from_bytes(d[:4], 'big')
