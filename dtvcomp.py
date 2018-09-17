@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-import os
 tbl = [0] * 256
 for i in range(256):
     register = i
@@ -34,7 +33,7 @@ for line in f1:
     channel[1][-72:-68] = numchannels.to_bytes(4, 'big')
     bindata += b'\x01' + len(nameb).to_bytes(4, 'little') + nameb + channel[1]
 bindata = bytearray(b'\x00\x00\x00\x06') + numchannels.to_bytes(4, 'big') + bindata
-rc = os.urandom(1)[0]
+rc = ((len(bindata) + 12) & 0xff) ^ 0xd6
 for i in range(len(bindata)):
     bindata[i] ^= rc
 bindata = b'\x00\x00\x00\x13' + bindata
